@@ -3,19 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Validación</title>
+    <title>Formulario de 4 Nivel ROMULO CABASCANGO</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Registro de Usuario</h1>
+      
+        <div style="display: flex; justify-content: center; align-items: center; height: 30vh;">
+    <img 
+        src="8RhU.gif" 
+        alt="GIF animado" 
+        style="
+            width: 250px;
+            height: 250px;
+            border-radius: 30%;
+            object-fit: cover;
+            border: 1px solid #ccc;
+        ">
+</div>
+
+        <h1>Registro de Usuario del Nivel 4</h1>
         <form id="registrationForm">
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" minlength="3" required>
                 <span class="error-message" id="nombreError"></span>
             </div>
-            
+             <div class="form-group">
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" name="apellido" minlength="3" required>
+                <span class="error-message" id="apellidoError"></span>
+            </div>
+             <div class="form-group">
+                <label for="ciudad">Ciudad:</label>
+                <input type="text" id="ciudad" name="ciudad" minlength="3" required>
+                <span class="error-message" id="ciudadError"></span>
+            </div>
+             <div class="form-group">
+                <label for="postal">Cod.Postal:</label>
+                <input type="text" id="postal" name="postal" minlength="3" required>
+                <span class="error-message" id="postalError"></span>
+            </div>
+             <div class="form-group">
+                <label for="cedula">CEDULA:</label>
+                <input type="text" id="cedula" name="cedula" minlength="3" required>
+                <span class="error-message" id="cedulaError"></span>
+            </div>
             <div class="form-group">
                 <label for="email">Correo electrónico:</label>
                 <input type="email" id="email" name="email" required>

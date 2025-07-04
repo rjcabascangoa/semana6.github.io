@@ -1,6 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('registrationForm');
     const nombreInput = document.getElementById('nombre');
+    const apellidoInput = document.getElementById('apellido');
+    const ciudadInput = document.getElementById('ciudad');          
+    const postalInput = document.getElementById('postal');
+    const cedulaInput = document.getElementById('cedula');
+    const telefonoInput = document.getElementById('telefono');
+    const fechaNacimientoInput = document.getElementById('fechaNacimiento');    
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('confirmPassword');
@@ -8,7 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitBtn = document.getElementById('submitBtn');
     const resetBtn = document.getElementById('resetBtn');
 
-    // Expresión regular para validar email
+    
+
+    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
     // Expresión regular para validar contraseña (mínimo 8 caracteres, al menos un número y un carácter especial)
@@ -16,11 +24,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Validación en tiempo real para cada campo
     nombreInput.addEventListener('input', validateNombre);
+    apellidoInput.addEventListener('input', validateApellido);
+    ciudadInput.addEventListener('input', function() {
+        const ciudad = ciudadInput.value.trim();
+        const errorElement = document.getElementById('ciudadError');
+        if (ciudad.length < 3) {
+            showError(ciudadInput, errorElement, 'La ciudad debe tener al menos 3 caracteres');
+        } else {
+            showSuccess(ciudadInput, errorElement);
+        }
+    });
+
     emailInput.addEventListener('input', validateEmail);
+    cedulaInput.addEventListener('input', validatecedula);
     passwordInput.addEventListener('input', validatePassword);
     confirmPasswordInput.addEventListener('input', validateConfirmPassword);
     edadInput.addEventListener('input', validateEdad);
-    
+    postalInput.addEventListener('input',validateNombre);
     // Botón de reinicio
     resetBtn.addEventListener('click', resetForm);
     
@@ -34,15 +54,46 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+
     function validateNombre() {
-        const nombre = nombreInput.value.trim();
-        const errorElement = document.getElementById('nombreError');
-        
-        if (nombre.length < 3) {
-            showError(nombreInput, errorElement, 'El nombre debe tener al menos 3 caracteres');
+    const nombre = nombreInput.value.trim();
+    const errorElement = document.getElementById('nombreError');
+    const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ\s]+$/; // Regex para letras (incluye acentos y espacios)
+
+    if (nombre.length < 2) {
+        showError(nombreInput, errorElement, 'El nombre debe tener al menos 5 caracteres');
+        return false;
+    } else if (!soloLetras.test(nombre)) {
+        showError(nombreInput, errorElement, 'Solo se permiten letras (sin números ni caracteres especiales)');
+        return false;
+    } else {
+        showSuccess(nombreInput, errorElement);
+        return true;
+    }
+}
+    function validateApellido() {
+        const apellido = apellidoInput.value.trim();        
+        const errorElement = document.getElementById('apellidoError');
+        const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ\s]+$/; // Regex para letras (incluye acentos y espacios)
+        if (apellido.length < 2) {
+            showError(apellidoInput, errorElement, 'El apellido debe tener al menos 3 caracteres');
+            return false;                   
+        } else if (!soloLetras.test(apellido)) {
+            showError(apellidoInput, errorElement, 'Solo se permiten letras (sin números ni caracteres especiales)');
             return false;
         } else {
-            showSuccess(nombreInput, errorElement);
+            showSuccess(apellidoInput, errorElement);
+            return true;
+        }
+    }
+    function validateEdad() {
+        const edad = parseInt(edadInput.value);
+        const errorElement = document.getElementById('edadError');
+        if (isNaN(edad) || edad < 18) {
+            showError(edadInput, errorElement, 'Debes ser mayor de 18 años');
+            return false;
+        } else {
+            showSuccess(edadInput, errorElement);
             return true;
         }
     }
@@ -91,17 +142,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function validateEdad() {
-        const edad = parseInt(edadInput.value);
-        const errorElement = document.getElementById('edadError');
-        
-        if (isNaN(edad) || edad < 18) {
-            showError(edadInput, errorElement, 'Debes ser mayor de 18 años');
-            return false;
-        } else {
-            showSuccess(edadInput, errorElement);
-            return true;
-        }
+    const edad = edadInput.value;
+    const errorElement = document.getElementById('edadError');
+    
+    if (edad === '') {
+        showError(edadInput, errorElement, 'Ingrese su edad');
+        return false;
     }
+    
+    const edadNum = parseInt(edad);
+    if (edadNum < 18) {
+        showError(edadInput, errorElement, 'Debes ser mayor de 18 años');
+        return false;
+    }
+    
+    showSuccess(edadInput, errorElement);
+    return true;
+}
+
 
     function validateForm() {
         const isNombreValid = validateNombre();
@@ -138,5 +196,21 @@ document.addEventListener('DOMContentLoaded', function() {
             input.classList.remove('valid', 'invalid');
         });
         submitBtn.disabled = true;
+    }
+    function validatecedula() {
+        const cedula = cedulaInput.value.trim();
+        const errorElement = document.getElementById('cedulaError');
+        const soloNumeros = /^[0-9]+$/; // Regex para números
+
+        if (cedula.length < 3) {
+            showError(cedulaInput, errorElement, 'La cédula debe tener al menos 3 caracteres');
+            return false;
+        } else if (!soloNumeros.test(cedula)) {
+            showError(cedulaInput, errorElement, 'Solo se permiten números');
+            return false;
+        } else {
+            showSuccess(cedulaInput, errorElement);
+            return true;
+        }
     }
 });
